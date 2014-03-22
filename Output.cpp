@@ -5,12 +5,23 @@ Output::Output() : _lcd(LCD_RS_PIN, LCD_EN_PIN, LCD_DATA4_PIN, LCD_DATA5_PIN, LC
   _redPin      = RED_LED_PIN;
   _yellowPin   = YELLOW_LED_PIN;
   _greenPin    = GREEN_LED_PIN;
-  _speakerPin = SPEAKER_PIN;
+  _speakerPin  = SPEAKER_PIN;
   
   pinMode(RED_LED_PIN, OUTPUT);
   pinMode(YELLOW_LED_PIN, OUTPUT);
   pinMode(GREEN_LED_PIN, OUTPUT);
   pinMode(SPEAKER_PIN, OUTPUT);
+  pinMode(GREEN_SWL_PIN, OUTPUT);
+  pinMode(RED_SWL_PIN, OUTPUT);
+
+  pinMode(DET_PIN_ONE, OUTPUT);
+  pinMode(DET_PIN_TWO, OUTPUT);
+
+  digitalWrite(GREEN_SWL_PIN, LOW);
+  digitalWrite(RED_SWL_PIN, LOW);
+
+  digitalWrite(DET_PIN_ONE, LOW);
+  digitalWrite(DET_PIN_TWO, LOW);
 }
 
 void Output::begin() {
@@ -27,9 +38,12 @@ void Output::begin() {
   setReady();
   clearTime();
   Serial.println("Completed Output config");
+  noTone(_speakerPin);
 }
 
 void Output::update() {
+  digitalRead(GREEN_SW_PIN) == LOW ? digitalWrite(GREEN_SWL_PIN, HIGH) : digitalWrite(GREEN_SWL_PIN, LOW);
+  digitalRead(RED_SW_PIN) == LOW ? digitalWrite(RED_SWL_PIN, HIGH) : digitalWrite(RED_SWL_PIN, LOW);
 }
 
 void Output::beep() {
@@ -37,11 +51,20 @@ void Output::beep() {
 }
 
 void Output::fail() {
-  tone(_speakerPin, 262, 200);
+  tone(_speakerPin, 262, 300);
+}
+
+void Output::pass() {
+  tone(_speakerPin, 2093, 300);
 }
 
 void Output::flatLine() {
-  tone(_speakerPin, 880, 3000);
+  tone(_speakerPin, 880);
+  delay(2000);
+  noTone(_speakerPin);
+
+  digitalWrite(DET_PIN_ONE, HIGH);
+  digitalWrite(DET_PIN_TWO, HIGH);
 }
 
 void Output::setStatus(char *str) {

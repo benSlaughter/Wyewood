@@ -3,8 +3,8 @@
 
 Countdown::Countdown(Output& output) : _output(output) {
   _active     = false;
-  timeMinutes = 0;
-  timeSeconds = 10;
+  timeMinutes = 5;
+  timeSeconds = 0;
   interval    = 100;
   restart     = false;
 }

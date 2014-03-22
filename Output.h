@@ -5,12 +5,18 @@
 #include <Wire.h>
 #include <Adafruit_LEDBackpack.h>
 #include <Adafruit_GFX.h>
+#include "input.h"
 
-#define GREEN_LED_PIN  5
+#define DET_PIN_ONE    9
+#define DET_PIN_TWO    8
+
+#define GREEN_LED_PIN  7
 #define YELLOW_LED_PIN 6
-#define RED_LED_PIN    7
+#define RED_LED_PIN    5
+#define SPEAKER_PIN    4
+#define GREEN_SWL_PIN  3
+#define RED_SWL_PIN    2
 
-#define SPEAKER_PIN    10
 
 #define LCD_RS_PIN     22
 #define LCD_EN_PIN     24
@@ -33,6 +39,7 @@ public:
   void update();
   void beep();
   void fail();
+  void pass();
   void flatLine();
   void setStatus(char *str);
   void setInstruction(char *str);

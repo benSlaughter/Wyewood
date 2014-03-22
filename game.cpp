@@ -6,16 +6,18 @@ Game::Game(Input& input, Output& output, Countdown& countdown) : _input(input), 
 }
 
 void Game::begin() {
-  _code[0] = '1';
-  _code[1] = '2';
-  _code[2] = '3';
-  _code[3] = '4';
+  _code[0] = '3';
+  _code[1] = '3';
+  _code[2] = '4';
+  _code[3] = '5';
 
   _reset();
 }
 
 void Game::update() {
-  _codeEntry();
+  if (digitalRead(GREEN_SW_PIN) == LOW || digitalRead(RED_SW_PIN) == LOW) {
+    _codeEntry();
+  }
 }
 
 void Game::_codeEntry() {
@@ -30,8 +32,17 @@ void Game::_codeEntry() {
     _codeDiaplay();
 
     if (_entry_int > 3) {
+      delay(200);
       if (_check()) {
-        _countdown.active() ? _countdown.stop() : _countdown.start();
+        if (digitalRead(GREEN_SW_PIN) == LOW) {
+          _countdown.start();
+          _output.setArmed();
+        } else {
+          _countdown.stop();
+          _output.setIdle();
+        }
+
+        _output.pass();
       } else {
         _output.fail();
       }

@@ -8,6 +8,10 @@ char hexaKeys[ROW_NUM][COL_NUM] = KEYBOARD;
 Input::Input() : keypad(makeKeymap(hexaKeys), rowPins, colPins, ROW_NUM, COL_NUM) {
   keypad.setDebounceTime(50);
   _accel = Adafruit_ADXL345_Unified(12345);
+
+  pinMode(GREEN_SW_PIN, INPUT_PULLUP);
+  pinMode(RED_SW_PIN, INPUT_PULLUP);
+  pinMode(KEY_PIN, INPUT_PULLUP);
 }
 
 void Input::begin() {

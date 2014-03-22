@@ -6,6 +6,10 @@
 #include <Adafruit_ADXL345_U.h>
 #include <Keypad.h>
 
+#define KEY_PIN      53
+#define GREEN_SW_PIN 51
+#define RED_SW_PIN   49
+
 #define ROW_NUM 4
 #define COL_NUM 4
 #define ROW_PINS {34, 36, 38, 40}
